@@ -1,0 +1,17 @@
+{
+    "require": {
+        "slim/slim": "^2.6",
+        "slim/views": "^0.1.3",
+        "jasny/db-mysql": "^1.1",
+        "jasny/config": "^1.1",
+        "jasny/dbquery-mysql": "^2.0"
+    },
+
+    "autoload":{
+ 		"psr-4":{
+ 			"Core\\":"Core"
+ 		}
+   
+    }
+
+}

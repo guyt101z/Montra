@@ -1,0 +1,32 @@
+{
+    "name": "jasny/config",
+    "description": "Configure your application. You can load .ini, .json, .yaml or .neon files or a MySQL DB.",
+    "keywords": ["config", "configuration", "ini", "json", "yaml", "db", "mysql"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arnold Daniels",
+            "email": "arnold@jasny.net",
+            "homepage": "http://www.jasny.net"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/jasny/Config/issues",
+        "source": "https://github.com/jasny/Config"
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "mustangostang/spyc": "0.*",
+	"symfony/yaml": "2.*"
+    },
+    "suggests": {
+        "symfony/yaml": "To support YAML without the yaml or syck php extension"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jasny\\Config": "src/"
+        }
+    }
+}
