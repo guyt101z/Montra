@@ -13,19 +13,62 @@ class UserModel{
 		self::$app = \Slim\Slim::getInstance();
 	}
 
-	static public function getUser($id){
+	static public function getUserByID($id){
 
-		$aUser = self::$app->db->fetchOne("SELECT * FROM user WHERE id = ? ", MYSQLI_ASSOC, $id);
-		return  $aUser;    	
+		return self::$app->db->fetchOne("SELECT * FROM users WHERE id = ? ", MYSQLI_ASSOC, $id);
+	}
+
+	static public function getUserByCardNumber($cardNumber){
+
+		return self::$app->db->fetchOne("SELECT * FROM users WHERE CardNumber = ? ", MYSQLI_ASSOC, $cardNumber);
+	}
+
+	static public function getUserList(){
+		return self::$app->db->fetchAll("SELECT * FROM users ", MYSQLI_ASSOC);		 	
 	}
 
 	static public function addUser($aValues){
 		if(!is_array($aValues)) return false;
 		// TODO Добавить проверку по ключам
 
-		return self::$app->db->save('user', $aValues);		
+		$aValues['ID'] = '';
+		return self::$app->db->save('users', $aValues);				
 	}
 
+	static public function addTransaction($cardFrom,$cardTo,$amount){
+		if(!$cardFrom || !$cardTo || !$amount) return false;
+
+		// Отключаем autocommit
+		self::$app->db->query("SET AUTOCOMMIT=0");
+
+		// Запускаем транзакцию
+		self::$app->db->query("START TRANSACTION");
+
+		// Списываем сумму
+		// UPDATE user_account SET allsum=allsum - 1000 WHERE id='2';
+		self::$app->db->query("UPDATE users SET amount=amount - ?d WHERE CardNumber=?d",$amount,$cardFrom);
+
+		// Прибавляем сумму
+		self::$app->db->query("UPDATE users SET amount=amount + ?d WHERE CardNumber=?d",$amount,$cardTo);
+
+		// Записать транзакцию
+		$aValues = array();
+		$aValues['ID'] = '';
+		$aValues['CartNumberFrom'] = $cardFrom;
+		$aValues['CartNumberTo'] = $cardTo;
+		$aValues['Amount'] = $cardTo;
+		$aValues['DateCreate'] = date('Y-m-d H:i:s');
+
+		self::$app->db->save('transactions', $aValues);	
+
+		// Завершаем транзакцию
+		self::$app->db->query("COMMIT;");
+
+		// Включаем autocommit
+		self::$app->db->query("SET AUTOCOMMIT=1");
+	
+		return true;			
+	}
 
 	static protected function luhn($number) {
         // Force the value to be a string as this method uses string functions.

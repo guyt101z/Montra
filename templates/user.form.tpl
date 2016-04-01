@@ -20,7 +20,38 @@
 		    <div class="col-sm-10">
 		      <input name="CardNumber" type="text" class="form-control" id="card-number" >
 		    </div>
+		  </div>		  
+		  <div class="form-group">
+		    <label for="cv2" class="col-sm-2 control-label">CV2</label>
+		    <div class="col-sm-10">
+		      <input name="CV2" type="text" class="form-control" id="cv2" >
+		    </div>
 		  </div>
+		  <div class="form-group">
+		    <label for="expiration-date" class="col-sm-2 control-label">Expiration Date</label>
+		    <div class="col-sm-10">
+		      <input name="ExpirationDate" type="text" class="form-control" id="expiration-date" >
+		    </div>
+		  </div>		  
+		  <div class="form-group">
+		    <label for="card-holder-name" class="col-sm-2 control-label">Card Holder Name</label>
+		    <div class="col-sm-10">
+		      <input name="CardHolderName" type="text" class="form-control" id="card-holder-name" >
+		    </div>
+		  </div>		 
+		  <div class="form-group">
+		    <label for="email" class="col-sm-2 control-label">Email</label>
+		    <div class="col-sm-10">
+		      <input name="Email" type="text" class="form-control" id="email" >
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="amount" class="col-sm-2 control-label">Amount</label>
+		    <div class="col-sm-10">
+		      <input name="Amount" type="text" class="form-control" id="amount" >
+		    </div>
+		  </div>
+
 
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">

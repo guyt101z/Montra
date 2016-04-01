@@ -57,8 +57,16 @@ $app->get('/user/add/', function ()  use ($app) {
     CUser::form(); 
 });
 
+$app->get('/transactions/add/', function ()  use ($app) {
+    CUser::formTransactions(); 
+});
+
 $app->post('/user/add/', function ()  use ($app) {
     CUser::add(); 
+});
+
+$app->post('/transaction/add/', function ()  use ($app) {
+    CUser::addTransaction(); 
 });
 
 
