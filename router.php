@@ -72,9 +72,3 @@ $app->get('/', function () use ($app) {
 // $app->get('/user/:id', function($id) use ($app){  
 //     CUser::index($id);  
 // })->conditions(array('id' => '[0-9]{1,}'));
-
-
-$app->post('/login', function () {    
-	CMain::authorization();
-})->name('login');
-

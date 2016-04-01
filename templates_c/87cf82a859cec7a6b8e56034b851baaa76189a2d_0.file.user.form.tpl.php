@@ -1,28 +1,28 @@
-<?php /* Smarty version 3.1.24, created on 2016-04-01 02:27:26
+<?php /* Smarty version 3.1.24, created on 2016-04-01 16:02:36
          compiled from "./templates/user.form.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:169713172556fdb25ee05620_19605381%%*/
+/*%%SmartyHeaderCode:9741441056fe716c215c12_25722309%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '22add829b53e0d2193a1fcb991a7ad7e2f106773' => 
+    '87cf82a859cec7a6b8e56034b851baaa76189a2d' => 
     array (
       0 => './templates/user.form.tpl',
-      1 => 1459466838,
+      1 => 1459515705,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '169713172556fdb25ee05620_19605381',
+  'nocache_hash' => '9741441056fe716c215c12_25722309',
   'has_nocache_code' => false,
   'version' => '3.1.24',
-  'unifunc' => 'content_56fdb25ee20ac6_61079436',
+  'unifunc' => 'content_56fe716c25f6f9_88292770',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_56fdb25ee20ac6_61079436')) {
-function content_56fdb25ee20ac6_61079436 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_56fe716c25f6f9_88292770')) {
+function content_56fe716c25f6f9_88292770 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '169713172556fdb25ee05620_19605381';
+$_smarty_tpl->properties['nocache_hash'] = '9741441056fe716c215c12_25722309';
 echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
 ?>
 
@@ -41,11 +41,17 @@ echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smart
 		    <div class="col-sm-10">
 		      <input name="LastName" type="text" class="form-control" id="last-name" >
 		    </div>
+		  </div>		  
+		  <div class="form-group">
+		    <label for="card-number" class="col-sm-2 control-label">Card Number</label>
+		    <div class="col-sm-10">
+		      <input name="CardNumber" type="text" class="form-control" id="card-number" >
+		    </div>
 		  </div>
 
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="submit" class="btn btn-default">Sign in</button>
+		      <button type="submit" class="btn btn-default">Добавить</button>
 		    </div>
 		  </div>
 		</form>
