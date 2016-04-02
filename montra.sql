@@ -2,7 +2,8 @@
 SQLyog Ultimate - MySQL GUI v8.2 
 MySQL - 5.5.47-0ubuntu0.14.04.1 : Database - montra
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -49,7 +50,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`ID`,`FirstName`,`LastName`,`CardNumber`,`CV2`,`ExpirationDate`,`CardHolderName`,`Email`,`Amount`) values (9,'Рыков','Сергеевич','1738292928284637',123,'11/25','RYKOV ARTEM','rykov.artem@gmail.com',600000),(10,'Фурда','Ольга','5338782924584637',524,'11/25','FURDA OLGA','olga.furda@gmail.com',1200000);
+insert  into `users`(`ID`,`FirstName`,`LastName`,`CardNumber`,`CV2`,`ExpirationDate`,`CardHolderName`,`Email`,`Amount`) values (9,'Рыжков','Иванка','1738292928284637',123,'11/25','RYGH IVAN','rygh.ivan@gmail.com',600000),(10,'Фунаа','Эльга','5338782924584637',524,'11/25','FUNAA ЕLGA','funa.elga@gmail.com',1200000);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
