@@ -3,7 +3,7 @@
 namespace Core\Models;
 
 /**
-* 
+* Модель пользователя
 */
 class UserModel{
 	
@@ -13,66 +13,97 @@ class UserModel{
 		self::$app = \Slim\Slim::getInstance();
 	}
 
+	/**
+	 * Получить пользователя по ID
+	 * @param  int $id ид пользователя
+	 * @return array массив пользователя
+	 */
 	static public function getUserByID($id){
 
 		return self::$app->db->fetchOne("SELECT * FROM users WHERE id = ? ", MYSQLI_ASSOC, $id);
 	}
 
+	/**
+	 * Получить пользователя по CardNumber
+	 * @param  int $id ид пользователя
+	 * @return array массив пользователя
+	 */
 	static public function getUserByCardNumber($cardNumber){
-
 		return self::$app->db->fetchOne("SELECT * FROM users WHERE CardNumber = ? ", MYSQLI_ASSOC, $cardNumber);
 	}
 
+	/**
+	 * Получить список пользователей
+	 * @return array массив пользователей
+	 */
 	static public function getUserList(){
 		return self::$app->db->fetchAll("SELECT * FROM users ", MYSQLI_ASSOC);		 	
 	}
 
+	/**
+	 * Получить список пользователей
+	 * @param array $aValues ассоц. массив значений
+	 * @todo  Добавить проверку по ключам
+	 * @return bool 
+	 */
 	static public function addUser($aValues){
 		if(!is_array($aValues)) return false;
-		// TODO Добавить проверку по ключам
-
 		$aValues['ID'] = '';
 		return self::$app->db->save('users', $aValues);				
 	}
 
+	/**
+	 * Создание транзакции
+	 * @param string $cardFrom карта отправителя
+	 * @param string $cardTo   карта получателя
+	 * @param int $amount      сумма перевода
+	 */
 	static public function addTransaction($cardFrom,$cardTo,$amount){
 		if(!$cardFrom || !$cardTo || !$amount) return false;
 
 		// Отключаем autocommit
 		self::$app->db->query("SET AUTOCOMMIT=0");
+		try {
 
-		// Запускаем транзакцию
-		self::$app->db->query("START TRANSACTION");
+			// Запускаем транзакцию
+			self::$app->db->query("START TRANSACTION");
 
-		// Списываем сумму
-		// UPDATE user_account SET allsum=allsum - 1000 WHERE id='2';
-		self::$app->db->query("UPDATE users SET amount=amount - ?d WHERE CardNumber=?d",$amount,$cardFrom);
+			// Списываем сумму
+			// UPDATE user_account SET allsum=allsum - 1000 WHERE id='2';
+			self::$app->db->query("UPDATE users SET amount=amount - ? WHERE CardNumber=?",$amount,$cardFrom);
 
-		// Прибавляем сумму
-		self::$app->db->query("UPDATE users SET amount=amount + ?d WHERE CardNumber=?d",$amount,$cardTo);
+			// Прибавляем сумму
+			self::$app->db->query("UPDATE users SET amount=amount + ? WHERE CardNumber=?",$amount,$cardTo);
 
-		// Записать транзакцию
-		$aValues = array();
-		$aValues['ID'] = '';
-		$aValues['CartNumberFrom'] = $cardFrom;
-		$aValues['CartNumberTo'] = $cardTo;
-		$aValues['Amount'] = $cardTo;
-		$aValues['DateCreate'] = date('Y-m-d H:i:s');
+			// Записать транзакцию
+			$aValues = array();
+			$aValues['ID'] = '';
+			$aValues['CartNumberFrom'] = $cardFrom;
+			$aValues['CartNumberTo'] = $cardTo;
+			$aValues['Amount'] = $amount;
+			$aValues['DateCreate'] = date('Y-m-d H:i:s');
 
-		self::$app->db->save('transactions', $aValues);	
+			self::$app->db->save('transactions', $aValues);	
 
-		// Завершаем транзакцию
-		self::$app->db->query("COMMIT;");
-
+			// Завершаем транзакцию
+			self::$app->db->query("COMMIT;");
+		} catch (Exception $e) {
+			self::$app->db->query("ROLLBACK;");	
+			self::$app->db->query("SET AUTOCOMMIT=1");	
+			return false;		
+		}
 		// Включаем autocommit
-		self::$app->db->query("SET AUTOCOMMIT=1");
-	
+		self::$app->db->query("SET AUTOCOMMIT=1");	
 		return true;			
 	}
 
+	/**
+	 * Force the value to be a string as this method uses string functions.
+	 * Converting to an integer may pass PHP_INT_MAX and result in an error!
+	 * @param  [type] $number [description]
+	 * @return [type]         [description]
+	 */
 	static protected function luhn($number) {
-        // Force the value to be a string as this method uses string functions.
-        // Converting to an integer may pass PHP_INT_MAX and result in an error!
         $number = (string) $number;
 
         if ( ! ctype_digit($number))
@@ -106,6 +137,11 @@ class UserModel{
         return ($checksum % 10 === 0);
     }
 
+    /**
+     * [validCreditcard description]
+     * @param  [type] $number [description]
+     * @return [type]  
+     */
     static public function validCreditcard($number) {
 
     	$card_array= array( 'default' => array(
@@ -182,12 +218,6 @@ class UserModel{
 
         return self::luhn($number);
     }
-
-
-
-
-
-
 }
 
 $oUserModel = new UserModel();

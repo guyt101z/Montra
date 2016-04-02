@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.24, created on 2016-04-02 01:12:47
+<?php /* Smarty version 3.1.24, created on 2016-04-02 09:37:46
          compiled from "./templates/transactions.form.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:109231866856fef25f3bbc11_77681157%%*/
+/*%%SmartyHeaderCode:50818342256ff68ba25d768_81121426%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '5508a4fcd9d7f4e6a3634399992c865b8e1ed181' => 
     array (
       0 => './templates/transactions.form.tpl',
-      1 => 1459548756,
+      1 => 1459579058,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '109231866856fef25f3bbc11_77681157',
+  'nocache_hash' => '50818342256ff68ba25d768_81121426',
   'variables' => 
   array (
     'aUserList' => 0,
@@ -21,20 +21,20 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.24',
-  'unifunc' => 'content_56fef25f44bda9_19634686',
+  'unifunc' => 'content_56ff68ba2f79b8_98863800',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_56fef25f44bda9_19634686')) {
-function content_56fef25f44bda9_19634686 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_56ff68ba2f79b8_98863800')) {
+function content_56ff68ba2f79b8_98863800 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '109231866856fef25f3bbc11_77681157';
+$_smarty_tpl->properties['nocache_hash'] = '50818342256ff68ba25d768_81121426';
 echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
 ?>
 
 
 <div class="row">
 	<div class="col-md-6">
-		<form class="form-horizontal" action="/transaction/add/" method="POST">
+		<form class="form-horizontal" action="/transactions/add/" method="POST">
 		  <div class="form-group">
 		    <label for="first-name" class="col-sm-2 control-label">From User</label>
 		    <div class="col-sm-10">

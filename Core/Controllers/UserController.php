@@ -4,7 +4,7 @@ namespace Core\Controllers;
 use Core\Models\UserModel as MUser;
 
 /**
-* 
+*  Контроллер пользователя
 */
 class UserController{	
 
@@ -18,18 +18,14 @@ class UserController{
 	/**
 	 *	Отображение данных пользователя
 	 *	@param int id
+	 *	@return  bool false если ошибка
 	 */
 
-	static public function index($id){	
-
-		$aUser = MUser::getUser($id);		
-
-		var_dump($aUser);
-
-		//$data = array('id'=>$str);		
-		self::$app->render('user.tpl', array('game'=>$aUser));
-		return true;
-
+	static public function index($id){		
+		if(!is_numeric($id) || intval($id)<=0) return false;
+		$aUser = MUser::getUserByID($id);
+		$aUser = ($aUser)? $aUser : array();		
+		self::$app->render('user.tpl', array('user'=>$aUser));			
 	}
 
 
@@ -72,14 +68,7 @@ class UserController{
 
 		if (!preg_match("/^[0-9]+$/", $aPost['Amount'])) {
 			$aError[]='Заполните правильно поле "Amount"';
-		}	
-
-
-		//Expiration Date
-
-		// 01/20
-		//^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$
-
+		}
 
 		if(!empty($aError)){
 			self::$app->flash('error', implode("<br>", $aError));
@@ -97,18 +86,18 @@ class UserController{
 
 			if(MUser::addUser($aValues)){
 				self::$app->flash('success', 'Пользователь добавлен');
-			}
-
-			
+			}else{
+				self::$app->flash('error', 'Ошибка, пользователь не добавлен');
+			}			
 		}
 		self::$app->redirect("/user/add/");
-
-		//$data = array('id'=>$str);		
-		//self::$app->render('user.tpl', array('user'=>$aUser));
 		return true;
 
 	}
 
+	/**
+	 * Создание транзакции
+	 */
 	static public function addTransaction(){
 		$aPost = self::$app->request()->post();
 
@@ -128,7 +117,9 @@ class UserController{
 		}
 
 		// Проверим сумму перевода
-		if (!is_integer($aPost['Amount']) ||  $aPost['Amount']<=0) {
+		$aPost['Amount'] = intval($aPost['Amount']);
+
+		if ($aPost['Amount']<=0) {
 			$aError[]='Недопустимая сумма перевода';
 		}
 
@@ -140,20 +131,19 @@ class UserController{
 		if(!$aUserTo) $aError[]='В базе не найден получатель';
 
 		// Проверим на доступность средств у отправителя
-		if($aUserFrom['Amount'] < $aPost['CardNumberFrom']){
+		if($aUserFrom['Amount'] < $aPost['Amount']){
 			$aError[]='Недостаточно средств';
 		}
-		
+				
+
 		if(!empty($aError)){
 			self::$app->flash('error', implode("<br>", $aError));
 		}else{
-	
-
 			if(MUser::addTransaction($aPost['CardNumberFrom'], $aPost['CardNumberTo'], $aPost['Amount'])){
-				self::$app->flash('success', 'Пользователь добавлен');
-			}
-
-			
+				self::$app->flash('success', 'Транзакция успешна');
+			}else{
+				self::$app->flash('error', 'Ошибка. Транзакция отменена');
+			}			
 		}
 		self::$app->redirect("/transactions/add/");
 		return true;
@@ -167,8 +157,6 @@ class UserController{
 	 */
 
 	static public function form(){	
-			
-		//$data = array('id'=>$str);		
 		self::$app->render('user.form.tpl', array());
 		return true;
 
@@ -180,17 +168,11 @@ class UserController{
 	 */
 
 	static public function formTransactions(){	
-			
-		//$data = array('id'=>$str);	
 		// Выберем список пользователей
 		$aUserList = MUser::getUserList();	
 		self::$app->render('transactions.form.tpl', array('aUserList'=>$aUserList));
 		return true;
-
 	}
-
-
-
 }
 
 $oUserController = new UserController();

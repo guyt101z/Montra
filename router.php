@@ -65,7 +65,7 @@ $app->post('/user/add/', function ()  use ($app) {
     CUser::add(); 
 });
 
-$app->post('/transaction/add/', function ()  use ($app) {
+$app->post('/transactions/add/', function ()  use ($app) {
     CUser::addTransaction(); 
 });
 

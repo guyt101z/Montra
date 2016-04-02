@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<form class="form-horizontal" action="/transaction/add/" method="POST">
+		<form class="form-horizontal" action="/transactions/add/" method="POST">
 		  <div class="form-group">
 		    <label for="first-name" class="col-sm-2 control-label">From User</label>
 		    <div class="col-sm-10">
